@@ -23,4 +23,9 @@ typedef enum {
 //- (BOOL) setMove:(GameBoardMove) move atSpace:(int) space;
 - (BOOL) makeMoveAtSpace:(int) space;
 
+- (BOOL) gameOver;
+
+- (GameBoardMove) playerTurn;
+- (GameBoardMove) winner;
+
 @end

@@ -16,16 +16,16 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-/*
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[com_giantyakViewController alloc] initWithNibName:@"com_giantyakViewController_iPhone" bundle:nil];
     } else {
         self.viewController = [[com_giantyakViewController alloc] initWithNibName:@"com_giantyakViewController_iPad" bundle:nil];
     }
-*/
+/*
     self.viewController = [[com_giantyakViewController alloc] init];
     self.viewController.view = [[GameBoardView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+*/
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 

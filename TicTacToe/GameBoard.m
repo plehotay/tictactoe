@@ -9,6 +9,7 @@
 #import "GameBoard.h"
 
 @interface GameBoard() {
+    GameBoardMove winningPlayer;
     BOOL XsMove;
     NSMutableArray* spaces;
 }
@@ -43,6 +44,8 @@ static const int gameBoardSize = 9;
 
     // give the first move to X
     XsMove = YES;
+
+    winningPlayer = GAMEBOARD_MOVE_NONE;
 }
 
 - (int) size
@@ -95,5 +98,29 @@ static const int gameBoardSize = 9;
     return success;
 }
 */
+
+- (GameBoardMove) playerTurn
+{
+    if (XsMove) {
+        return GAMEBOARD_MOVE_X;
+    } else {
+        return GAMEBOARD_MOVE_O;
+    }    
+}
+
+- (void) checkForWinner
+{
+    
+}
+
+- (BOOL) gameOver
+{
+    return NO;
+}
+
+- (GameBoardMove) winner
+{
+    return winningPlayer;
+}
 
 @end

@@ -20,16 +20,26 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     gameBoard = [[GameBoard alloc] init];
-    GameBoardView* view = (GameBoardView*) self.view;
-    [view setGameBoardViewDelegate:self];
+
+    //GameBoardView* view = (GameBoardView*) self.view;
+    //[view setGameBoardViewDelegate:self];
+    [gameBoardView setGameBoardViewDelegate:self];
+    [gameBoardView setBoard:gameBoard];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    gameBoard = [[GameBoard alloc] init];
-    GameBoardView* view = (GameBoardView*) self.view;
-    [view setGameBoardViewDelegate:self];
-    [view setBoard:gameBoard];
+    //gameBoard = [[GameBoard alloc] init];
+    //GameBoardView* view = (GameBoardView*) self.view;
+    //[gameBoardView setGameBoardViewDelegate:self];
+    //[gameBoardView setBoard:gameBoard];
+
+    if ([gameBoard playerTurn] == GAMEBOARD_MOVE_X) {
+        messageLabel.text = @"X's turn";
+    } else {
+        messageLabel.text = @"O's turn";
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,8 +56,7 @@
         //[[NSNotificationCenter defaultCenter] postNotificationName:@"shake" object:self];
         NSLog(@"shake ended");
         
-        [gameBoard newGame];
-        [self.view setNeedsDisplay];
+        [self newGame];
     }
 }
 
@@ -58,10 +67,36 @@
 - (void) boardTappedAtSpace:(int) space
 {
     if ([gameBoard makeMoveAtSpace:space]) {
-        [self.view setNeedsDisplay];
+        //[self.view setNeedsDisplay];
+        [gameBoardView setNeedsDisplay];
+
+        if ([gameBoard playerTurn] == GAMEBOARD_MOVE_X) {
+            messageLabel.text = @"X's turn";
+        } else {
+            messageLabel.text = @"O's turn";
+        }
     }
     
 }
+
+- (void) newGame
+{
+    [gameBoard newGame];
+    //[self.view setNeedsDisplay];
+    [gameBoardView setNeedsDisplay];
+
+    if ([gameBoard playerTurn] == GAMEBOARD_MOVE_X) {
+        messageLabel.text = @"X's turn";
+    } else {
+        messageLabel.text = @"O's turn";
+    }
+}
+
+- (IBAction)newGameButtonPressed:(id)sender
+{
+    [self newGame];
+}
+
 
 /*
 -(void)viewDidAppear:(BOOL)animated {

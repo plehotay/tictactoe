@@ -25,6 +25,20 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialization code
+        tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+        [self addGestureRecognizer:tapRecognizer];
+        
+        gameBoard = nil;
+    }
+    
+    return self;
+}
+
 - (void) setGameBoardViewDelegate:(id<GameBoardViewDelegate>) delegateObj
 {
     gameBoardDelegate = delegateObj;
@@ -211,7 +225,7 @@
     NSLog(@"view origin x %f y %f", self.bounds.origin.x, self.bounds.origin.y);
     NSLog(@"view width %f height %f", self.bounds.size.width, self.bounds.size.height);
 
-    [self drawBackground];
+    //[self drawBackground];
 /*
     UIBezierPath* bg = [UIBezierPath bezierPathWithRect:self.bounds];
     //[[UIColor greenColor] setFill];

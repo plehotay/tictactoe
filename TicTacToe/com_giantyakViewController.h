@@ -12,6 +12,11 @@
 
 @interface com_giantyakViewController : UIViewController <GameBoardViewDelegate> {
     GameBoard* gameBoard;
+    IBOutlet GameBoardView* gameBoardView;
+    IBOutlet UILabel* messageLabel;
+    IBOutlet UIButton* newGameButton;
 }
+
+- (IBAction)newGameButtonPressed:(id)sender;
 
 @end
