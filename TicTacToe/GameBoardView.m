@@ -218,10 +218,88 @@
                   clockwise:YES];
 }
 
+- (void) drawWinningLine
+{
+    float shorterEdge = self.bounds.size.width;
+    if (self.bounds.size.height < self.bounds.size.width) {
+        shorterEdge = self.bounds.size.height;
+    }
+    float boardSize = shorterEdge * 0.9;
+    float border = shorterEdge / 20;
+    
+    float lineWidth = 10;
+    float spaceSize = (boardSize - lineWidth * 2) / 3;
+
+    //UIBezierPath* path = [UIBezierPath bezierPathWithRect:self.bounds];
+    UIBezierPath* path = [UIBezierPath bezierPath];
+
+    float xStart = 0;
+    float yStart = 0;
+    float xEnd = 0;
+    float yEnd = 0;
+
+    if ([gameBoard winningLocation] == GAMEBOARD_WIN_ROW_1) {
+        xStart = border;
+        yStart = border + spaceSize / 2;
+        xEnd = border + boardSize;
+        yEnd = yStart;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_ROW_2) {
+        xStart = border;
+        yStart = border + spaceSize + lineWidth + spaceSize / 2;
+        xEnd = border + boardSize;
+        yEnd = yStart;        
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_ROW_3) {
+        xStart = border;
+        yStart = border + (spaceSize + lineWidth) * 2 + spaceSize / 2;
+        xEnd = border + boardSize;
+        yEnd = yStart;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_COL_1) {
+        xStart = border + spaceSize / 2;
+        yStart = border;
+        xEnd = xStart;
+        yEnd = border + boardSize;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_COL_2) {
+        xStart = border + spaceSize + lineWidth + spaceSize / 2;
+        yStart = border;
+        xEnd = xStart;
+        yEnd = border + boardSize;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_COL_3) {
+        xStart = border + (spaceSize + lineWidth) * 2 + spaceSize / 2;
+        yStart = border;
+        xEnd = xStart;
+        yEnd = border + boardSize;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_DIAG_1) {
+        xStart = border;
+        yStart = border;
+        xEnd = border + boardSize;
+        yEnd = border + boardSize;
+    } else if ([gameBoard winningLocation] == GAMEBOARD_WIN_DIAG_2) {
+        xStart = border;
+        yStart = border + boardSize;
+        xEnd = border + boardSize;
+        yEnd = border;
+    }
+
+    [path moveToPoint:CGPointMake(xStart, yStart)];
+    [path addLineToPoint:CGPointMake(xEnd, yEnd)];
+
+    [[UIColor yellowColor] setStroke];
+
+    path.lineWidth = lineWidth;
+
+    [path stroke];
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    //CGContextRef aRef = UIGraphicsGetCurrentContext();
+
+    // If you have content to draw after the shape,
+    // save the current state before changing the transform.
+    //CGContextSaveGState(aRef);
+    
     NSLog(@"view origin x %f y %f", self.bounds.origin.x, self.bounds.origin.y);
     NSLog(@"view width %f height %f", self.bounds.size.width, self.bounds.size.height);
 
@@ -277,7 +355,14 @@
     // color does not obscure the stroked line.
     //[path fill];
     [path stroke];
+
+    // Restore the graphics state before drawing any other content.
+    //CGContextRestoreGState(aRef);
     
+    if ([gameBoard gameOver]) {
+        [self drawWinningLine];
+    }
+
     // Restore the graphics state before drawing any other content.
     //CGContextRestoreGState(aRef);
 }

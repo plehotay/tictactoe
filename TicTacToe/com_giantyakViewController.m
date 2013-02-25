@@ -70,7 +70,13 @@
         //[self.view setNeedsDisplay];
         [gameBoardView setNeedsDisplay];
 
-        if ([gameBoard playerTurn] == GAMEBOARD_MOVE_X) {
+        if ([gameBoard gameOver]) {
+            if ([gameBoard winner] == GAMEBOARD_MOVE_X) {
+                messageLabel.text = @"X Wins!";
+            } else if ([gameBoard winner] == GAMEBOARD_MOVE_O) {
+                messageLabel.text = @"O Wins!";
+            }
+        } else if ([gameBoard playerTurn] == GAMEBOARD_MOVE_X) {
             messageLabel.text = @"X's turn";
         } else {
             messageLabel.text = @"O's turn";
